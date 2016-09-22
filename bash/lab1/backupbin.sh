@@ -1,5 +1,4 @@
 #!/bin/bash
-# This script backups up my personal bin top my personal backups directory
-# not really a good backup though, just links in ~/bin
+# This script backups up my personal bin to my personal backups directory
 
-rsync -avr ~/bin ~/backups
+rsync -av ~/bin/ ~/backups
