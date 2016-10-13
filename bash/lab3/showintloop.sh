@@ -11,21 +11,20 @@ interfacenames=(`ifconfig |
 	awk '{print $1}'`)
 
 declare -a ips
-
-ips[0]=`ifconfig ${interfacenames[0]} | grep 'inet addr' | 
+intfindex=0
+while [ $intfindex -lt ${interfacenames[@]} ]; do
+ips[$intfindex]=`ifconfig ${interfacenames[$intfindex]} | grep 'inet addr' | 
 				sed -e 's/  *inet addr://'| sed -e 's/ .*//'`
 
-ips[1]=`ifconfig ${interfacenames[1]} | grep 'inet addr' | 
-				sed -e 's/  *inet addr://'| sed -e 's/ .*//'`
+	echo "Interface ${interfacenames[$intfindex]} has address ${ips[$intfindex]}"
+	intfindex=$((intfindex +1))
+done
 
 echo "Interface names found: ${interfacenames[@]}"
 
 gatewayip=`route -n|grep '^0.0.0.0 '|awk '{print $2}'`
 
 cat <<EOF
-
-Interfaces ${interfacenames[0]} has address ${ips[0]}
-Interfaces ${interfacenames[1]} has address ${ips[1]}
 
 My default gateway is $gatewayip 
 EOF
