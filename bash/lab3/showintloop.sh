@@ -12,7 +12,7 @@ interfacenames=(`ifconfig |
 
 declare -a ips
 intfindex=0
-while [ $intfindex -lt ${interfacenames[@]} ]; do
+while [ $intfindex -lt ${#interfacenames[@]} ]; do
 ips[$intfindex]=`ifconfig ${interfacenames[$intfindex]} | grep 'inet addr' | 
 				sed -e 's/  *inet addr://'| sed -e 's/ .*//'`
 
